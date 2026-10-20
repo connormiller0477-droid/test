@@ -1,9 +1,16 @@
 import os
+from flask import Flask
 
-print("=== ЗАПУСК ТЕСТА ===")
-api_key = os.environ.get("GEMINI_API_KEY")
+app = Flask(__name__)
 
-if api_key:
-    print(f"УСПЕХ! Ключ успешно получен из внешней среды: {api_key}")
-else:
-    print("ОШИБКА: Ключ не найден в переменных окружения!")
+@app.route('/')
+def home():
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if api_key:
+        return f"УСПЕХ! Ключ получен из внешней среды: {api_key}"
+    else:
+        return "Ключ не найден!"
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)

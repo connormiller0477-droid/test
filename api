@@ -1,19 +1,9 @@
 import os
-from flask import Flask
 
-app = Flask(__name__)
+print("=== ЗАПУСК ТЕСТА ===")
+api_key = os.environ.get("GEMINI_API_KEY")
 
-@app.route('/')
-def home():
-    # Пробуем вытащить ключ из настроек Render
-    api_key = os.environ.get("GEMINI_API_KEY")
-    
-    if api_key:
-        return f"<h1>УСПЕХ!</h1><p>Render передал ключ в код. Значение: <b>{api_key}</b></p>"
-    else:
-        return "<h1>ОШИБКА!</h1><p>Ключ не найден в переменных окружения Render.</p>"
-
-if __name__ == "__main__":
-    # Render передает порт через переменные окружения, по умолчанию 10000
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host='0.0.0.0', port=port)
+if api_key:
+    print(f"УСПЕХ! Ключ успешно получен из внешней среды: {api_key}")
+else:
+    print("ОШИБКА: Ключ не найден в переменных окружения!")
